@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF00A91D1E492359004263C1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A91C1E492359004263C1 /* LoginViewController.swift */; };
+		CF00A9201E4923E4004263C1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A91F1E4923E4004263C1 /* CustomButton.swift */; };
+		CF00A9221E492ADF004263C1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9211E492ADF004263C1 /* MapViewController.swift */; };
+		CF00A9241E492DD2004263C1 /* StudentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9231E492DD2004263C1 /* StudentsTableViewController.swift */; };
+		CF00A9271E492DF9004263C1 /* StudentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9261E492DF9004263C1 /* StudentsTableViewCell.swift */; };
+		CF00A9291E49300D004263C1 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9281E49300D004263C1 /* StudentInformation.swift */; };
 		CF3DB6ED1E45158A008DF397 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DB6E21E45158A008DF397 /* AppDelegate.swift */; };
 		CF3DB6EE1E45158A008DF397 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E31E45158A008DF397 /* Info.plist */; };
 		CF3DB6EF1E45158A008DF397 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E61E45158A008DF397 /* Assets.xcassets */; };
@@ -15,6 +21,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF00A91C1E492359004263C1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CF00A91F1E4923E4004263C1 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		CF00A9211E492ADF004263C1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		CF00A9231E492DD2004263C1 /* StudentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsTableViewController.swift; sourceTree = "<group>"; };
+		CF00A9261E492DF9004263C1 /* StudentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsTableViewCell.swift; sourceTree = "<group>"; };
+		CF00A9281E49300D004263C1 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		CF1BA4501E451445006EA382 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3DB6E21E45158A008DF397 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF3DB6E31E45158A008DF397 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,6 +46,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF00A91E1E4923D4004263C1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CF00A91F1E4923E4004263C1 /* CustomButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		CF00A9251E492DE7004263C1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CF00A9261E492DF9004263C1 /* StudentsTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		CF1BA4471E451445006EA382 = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +102,7 @@
 		CF3DB6E41E45158A008DF397 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CF00A9281E49300D004263C1 /* StudentInformation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -81,6 +110,7 @@
 		CF3DB6E51E45158A008DF397 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CF00A91E1E4923D4004263C1 /* Components */,
 				CF3DB6E61E45158A008DF397 /* Assets.xcassets */,
 				CF3DB6E71E45158A008DF397 /* LaunchScreen.storyboard */,
 				CF3DB6E91E45158A008DF397 /* Main.storyboard */,
@@ -98,6 +128,10 @@
 		CF3DB6EC1E45158A008DF397 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CF00A9251E492DE7004263C1 /* Cell */,
+				CF00A91C1E492359004263C1 /* LoginViewController.swift */,
+				CF00A9211E492ADF004263C1 /* MapViewController.swift */,
+				CF00A9231E492DD2004263C1 /* StudentsTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -176,7 +210,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF00A9291E49300D004263C1 /* StudentInformation.swift in Sources */,
+				CF00A91D1E492359004263C1 /* LoginViewController.swift in Sources */,
 				CF3DB6ED1E45158A008DF397 /* AppDelegate.swift in Sources */,
+				CF00A9201E4923E4004263C1 /* CustomButton.swift in Sources */,
+				CF00A9241E492DD2004263C1 /* StudentsTableViewController.swift in Sources */,
+				CF00A9221E492ADF004263C1 /* MapViewController.swift in Sources */,
+				CF00A9271E492DF9004263C1 /* StudentsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
