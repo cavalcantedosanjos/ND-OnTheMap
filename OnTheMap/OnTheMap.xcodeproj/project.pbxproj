@@ -13,11 +13,13 @@
 		CF00A9241E492DD2004263C1 /* StudentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9231E492DD2004263C1 /* StudentsTableViewController.swift */; };
 		CF00A9271E492DF9004263C1 /* StudentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9261E492DF9004263C1 /* StudentsTableViewCell.swift */; };
 		CF00A9291E49300D004263C1 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A9281E49300D004263C1 /* StudentInformation.swift */; };
+		CF00A92B1E494D7F004263C1 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF00A92A1E494D7F004263C1 /* StudentLocation.swift */; };
 		CF3DB6ED1E45158A008DF397 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DB6E21E45158A008DF397 /* AppDelegate.swift */; };
 		CF3DB6EE1E45158A008DF397 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E31E45158A008DF397 /* Info.plist */; };
 		CF3DB6EF1E45158A008DF397 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E61E45158A008DF397 /* Assets.xcassets */; };
 		CF3DB6F01E45158A008DF397 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E71E45158A008DF397 /* LaunchScreen.storyboard */; };
 		CF3DB6F11E45158A008DF397 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E91E45158A008DF397 /* Main.storyboard */; };
+		CF4E30E31E4BD22A00092710 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E30E21E4BD22A00092710 /* ServiceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,12 +29,14 @@
 		CF00A9231E492DD2004263C1 /* StudentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsTableViewController.swift; sourceTree = "<group>"; };
 		CF00A9261E492DF9004263C1 /* StudentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsTableViewCell.swift; sourceTree = "<group>"; };
 		CF00A9281E49300D004263C1 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		CF00A92A1E494D7F004263C1 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 		CF1BA4501E451445006EA382 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3DB6E21E45158A008DF397 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF3DB6E31E45158A008DF397 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF3DB6E61E45158A008DF397 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF3DB6E81E45158A008DF397 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF3DB6EA1E45158A008DF397 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CF4E30E21E4BD22A00092710 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				CF00A9281E49300D004263C1 /* StudentInformation.swift */,
+				CF00A92A1E494D7F004263C1 /* StudentLocation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 		CF3DB6EB1E45158A008DF397 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CF4E30E21E4BD22A00092710 /* ServiceManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -210,10 +216,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF00A92B1E494D7F004263C1 /* StudentLocation.swift in Sources */,
 				CF00A9291E49300D004263C1 /* StudentInformation.swift in Sources */,
 				CF00A91D1E492359004263C1 /* LoginViewController.swift in Sources */,
 				CF3DB6ED1E45158A008DF397 /* AppDelegate.swift in Sources */,
 				CF00A9201E4923E4004263C1 /* CustomButton.swift in Sources */,
+				CF4E30E31E4BD22A00092710 /* ServiceManager.swift in Sources */,
 				CF00A9241E492DD2004263C1 /* StudentsTableViewController.swift in Sources */,
 				CF00A9221E492ADF004263C1 /* MapViewController.swift in Sources */,
 				CF00A9271E492DF9004263C1 /* StudentsTableViewCell.swift in Sources */,
