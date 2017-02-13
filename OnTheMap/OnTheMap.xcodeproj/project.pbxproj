@@ -23,7 +23,6 @@
 		CFE8BD871E525495009479D4 /* StudentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD861E525495009479D4 /* StudentService.swift */; };
 		CFE8BD8F1E5266EB009479D4 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD8D1E5266EB009479D4 /* Environment.swift */; };
 		CFE8BD901E5266EB009479D4 /* URLFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD8E1E5266EB009479D4 /* URLFactory.swift */; };
-		CFE8BD951E526EC5009479D4 /* UIViewControllerEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD941E526EC5009479D4 /* UIViewControllerEX.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +43,6 @@
 		CFE8BD861E525495009479D4 /* StudentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentService.swift; sourceTree = "<group>"; };
 		CFE8BD8D1E5266EB009479D4 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		CFE8BD8E1E5266EB009479D4 /* URLFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLFactory.swift; sourceTree = "<group>"; };
-		CFE8BD941E526EC5009479D4 /* UIViewControllerEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerEX.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +153,6 @@
 		CF4E30E61E4BD88300092710 /* Convenient */ = {
 			isa = PBXGroup;
 			children = (
-				CFE8BD911E52679C009479D4 /* Extensions */,
 				CFE8BD8C1E5266EB009479D4 /* Environment */,
 			);
 			path = Convenient;
@@ -168,14 +165,6 @@
 				CFE8BD8E1E5266EB009479D4 /* URLFactory.swift */,
 			);
 			path = Environment;
-			sourceTree = "<group>";
-		};
-		CFE8BD911E52679C009479D4 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				CFE8BD941E526EC5009479D4 /* UIViewControllerEX.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +246,6 @@
 				CF00A91D1E492359004263C1 /* LoginViewController.swift in Sources */,
 				CFE8BD901E5266EB009479D4 /* URLFactory.swift in Sources */,
 				CF3DB6ED1E45158A008DF397 /* AppDelegate.swift in Sources */,
-				CFE8BD951E526EC5009479D4 /* UIViewControllerEX.swift in Sources */,
 				CF00A9201E4923E4004263C1 /* CustomButton.swift in Sources */,
 				CF4E30E31E4BD22A00092710 /* ServiceManager.swift in Sources */,
 				CF00A9241E492DD2004263C1 /* StudentsTableViewController.swift in Sources */,

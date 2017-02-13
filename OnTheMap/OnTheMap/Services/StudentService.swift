@@ -31,12 +31,12 @@ class StudentService: NSObject {
             ]
         ]
         
-        ServiceManager.sharedInstance().request(method: .POST, url: URLFactory.sharedInstance().autentitionUrl(), parameters: parameters as [String : AnyObject]?, onSuccess: { (res) in
+        ServiceManager.sharedInstance().request(method: .POST, url: URLFactory.sharedInstance().autentitionUrl(), parameters: parameters as AnyObject?, onSuccess: { (res) in
             print(res)
         }, onFailure: {
             
         }, onCompleted: {
-        
+            onCompleted()
         })
         
     }

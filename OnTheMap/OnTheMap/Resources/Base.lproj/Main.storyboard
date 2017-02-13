@@ -108,6 +108,9 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YI0-cc-dEd">
+                                        <rect key="frame" x="142" y="401" width="37" height="37"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -115,6 +118,8 @@
                                     <constraint firstItem="7aL-a2-DlY" firstAttribute="top" secondItem="3S0-Xt-YTj" secondAttribute="bottom" constant="8" id="2BD-A8-dpW"/>
                                     <constraint firstItem="wQl-bb-WNG" firstAttribute="centerX" secondItem="av1-cR-9Bi" secondAttribute="centerX" id="2mX-FZ-hqD"/>
                                     <constraint firstItem="3S0-Xt-YTj" firstAttribute="leading" secondItem="av1-cR-9Bi" secondAttribute="leading" constant="16" id="3JV-aY-8ZV"/>
+                                    <constraint firstItem="YI0-cc-dEd" firstAttribute="centerX" secondItem="av1-cR-9Bi" secondAttribute="centerX" id="5NB-pu-6P5"/>
+                                    <constraint firstItem="YI0-cc-dEd" firstAttribute="top" secondItem="wQl-bb-WNG" secondAttribute="bottom" constant="8" id="60U-VA-klI"/>
                                     <constraint firstItem="wQl-bb-WNG" firstAttribute="top" secondItem="7aL-a2-DlY" secondAttribute="bottom" constant="8" id="88T-dT-LWi"/>
                                     <constraint firstItem="SbS-AU-Y80" firstAttribute="top" secondItem="av1-cR-9Bi" secondAttribute="top" constant="32" id="BCd-JV-ecX"/>
                                     <constraint firstAttribute="trailing" secondItem="aNW-6s-5UL" secondAttribute="trailing" constant="16" id="JM3-UD-tU5"/>
@@ -141,6 +146,7 @@
                     <navigationItem key="navigationItem" id="rCo-6n-4f6"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="YI0-cc-dEd" id="Nf3-sV-UZ7"/>
                         <outlet property="emailTextField" destination="aNW-6s-5UL" id="cKo-hm-PkC"/>
                         <outlet property="passwordTextField" destination="3S0-Xt-YTj" id="F6y-he-MRm"/>
                     </connections>

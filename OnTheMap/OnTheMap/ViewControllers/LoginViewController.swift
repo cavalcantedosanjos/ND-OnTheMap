@@ -13,12 +13,13 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        enableActivityIndicator(enable: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,23 +41,23 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     @IBAction func loginButton_clicked(_ sender: Any) {
         
-        
         guard let username = emailTextField.text, username != "" else {
-            self.showMessage(message: "Required E-mail.", title: "Invalid Field!")
+            showMessage(message: "Required E-mail.", title: "Invalid Field!")
             return
         }
         
         guard let password = passwordTextField.text, password != "" else {
-            
+             showMessage(message: "Required Password.", title: "Invalid Field!")
             return
         }
         
+        enableActivityIndicator(enable: true)
         StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: {
             
         }, onFailure: {
             
         }, onCompleted: {
-            
+           self.enableActivityIndicator(enable: false)
         })
     }
     
@@ -64,9 +65,28 @@ class LoginViewController: UIViewController {
         
     }
     
-    
-    
     // MARK: - Helpers
+    func showMessage(message: String, title: String) {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func enableActivityIndicator(enable: Bool){
+        if enable {
+            activityIndicator.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
+        } else {
+            activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
+        
+        activityIndicator.isHidden = !enable
+    }
     
     // MARK: - Keyboard
     
