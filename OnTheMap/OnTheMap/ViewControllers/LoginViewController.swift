@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class LoginViewController: UIViewController {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
-
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -39,13 +40,27 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     @IBAction func loginButton_clicked(_ sender: Any) {
         
+        
+        guard let username = emailTextField.text, username != "" else {
+            self.showMessage(message: "Required E-mail.", title: "Invalid Field!")
+            return
+        }
+        
+        guard let password = passwordTextField.text, password != "" else {
+            
+            return
+        }
+        
+        StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: {
+            
+        }, onFailure: {
+            
+        }, onCompleted: {
+            
+        })
     }
     
     @IBAction func singUpButton_clicked(_ sender: Any) {
-        
-    }
-    
-    @IBAction func facebookButton_clicked(_ sender: Any) {
         
     }
     
@@ -80,7 +95,7 @@ class LoginViewController: UIViewController {
     func keyboardWillHide(notification: Notification) {
         self.view.frame.origin.y = 0
     }
-
+    
 }
 
 // MARK: - UITextFieldDelegate
