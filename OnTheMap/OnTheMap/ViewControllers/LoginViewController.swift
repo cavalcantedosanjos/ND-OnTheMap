@@ -41,23 +41,27 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     @IBAction func loginButton_clicked(_ sender: Any) {
         
-        guard let username = emailTextField.text, username != "" else {
+        guard let username = emailTextField.text, username != "" || username != " " else {
             showMessage(message: "Required E-mail.", title: "Invalid Field!")
             return
         }
         
-        guard let password = passwordTextField.text, password != "" else {
-             showMessage(message: "Required Password.", title: "Invalid Field!")
+        guard let password = passwordTextField.text, password != "" || password != " " else {
+            showMessage(message: "Required Password.", title: "Invalid Field!")
             return
         }
         
+        
         enableActivityIndicator(enable: true)
-        StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: {
+        
+        StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (info) in
+            
+            self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
             
         }, onFailure: {
             
         }, onCompleted: {
-           self.enableActivityIndicator(enable: false)
+            self.enableActivityIndicator(enable: false)
         })
     }
     
@@ -89,7 +93,6 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Keyboard
-    
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
@@ -101,15 +104,12 @@ class LoginViewController: UIViewController {
     }
     
     func keyboardWillShow(_ notification:Notification) {
-        if passwordTextField.isFirstResponder {
-            
-            let userInfo = notification.userInfo
-            let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-            
-            let heightKeyboard =  keyboardSize.cgRectValue.height
-            
-            self.view.frame.origin.y = heightKeyboard * (-1)
-        }
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        
+        let heightKeyboard =  keyboardSize.cgRectValue.height - 60
+        
+        self.view.frame.origin.y = heightKeyboard  * (-1)
     }
     
     func keyboardWillHide(notification: Notification) {

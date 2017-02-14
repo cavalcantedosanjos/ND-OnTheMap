@@ -10,16 +10,17 @@ import UIKit
 
 class URLFactory: NSObject {
     
-    // MARK: Shared Instance
-    class func sharedInstance() -> URLFactory {
-        struct Singleton {
-            static var sharedInstance = URLFactory()
-        }
-        return Singleton.sharedInstance
-    }
-
     
-    func autentitionUrl() -> String {
+    class func autentitionUrl() -> String {
         return Environment.sharedInstance().baseUdacityUrl + "/api/session"
     }
+    
+    class func getStudentsLocationUrl() -> String {
+        return Environment.sharedInstance().baseParseUrl + "/parse/classes/StudentLocation"
+    }
+    
+    class func getCurrentUserLocationUrl(uniqueKey: String) -> String {
+         return Environment.sharedInstance().baseParseUrl + "/parse/classes/StudentLocation?where={\"uniqueKey\":\"\(uniqueKey)\"}"
+    }
+    
 }

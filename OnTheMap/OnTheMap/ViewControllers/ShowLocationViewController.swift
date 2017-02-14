@@ -1,44 +1,35 @@
 //
-//  MapViewController.swift
+//  ShowLocationViewController.swift
 //  OnTheMap
 //
-//  Created by Joao Anjos on 06/02/17.
+//  Created by Joao Anjos on 14/02/17.
 //  Copyright © 2017 Joao Anjos. All rights reserved.
 //
 
 import UIKit
 import MapKit
-import CoreLocation
 
-class MapViewController: UIViewController {
-    
+class ShowLocationViewController: UIViewController {
+
     // MARK: - Properties
     @IBOutlet weak var studentsMapView: MKMapView!
     
     let regionRadius: CLLocationDistance = 2000
     var locationManager: CLLocationManager = CLLocationManager()
-    
-    // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        checkLocationAuthorizationStatus()
-        
-        StudentService.sharedInstance().getStudentsLocation(onSuccess: { (res) in
-            
-        }, onFailure: { 
-            
-        }, onCompleted: {
-        
-        })
-    }
-    
+
+
     // MARK: - Actions
-    
+    @IBAction func cancelButton_Clicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+
+
 }
 
 // MARK: - CLLocationManagerDelegate
 
-extension MapViewController: CLLocationManagerDelegate {
+extension ShowLocationViewController: CLLocationManagerDelegate {
     
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -60,13 +51,13 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.locationManager.stopUpdatingLocation()
     }
-
+    
 }
 
 
 // MARK: - MKMapViewDelegate
 
-extension MapViewController: MKMapViewDelegate {
+extension ShowLocationViewController: MKMapViewDelegate {
     
     func zoomToUserCoordinate(userLocation: CLLocation) {
         let span = MKCoordinateSpanMake(0.05, 0.05)

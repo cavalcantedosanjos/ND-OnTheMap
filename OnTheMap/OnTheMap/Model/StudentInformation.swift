@@ -9,5 +9,19 @@
 import UIKit
 
 struct StudentInformation {
-
+    
+    static let currentUser = StudentInformation();
+    
+    var key: String?
+    var registered: Bool?
+    var expiration: String?
+    var sessionId: String?
+    var location:StudentLocation?
+   
+    init() {
+        
+    }
+    
+    
+    
 }
