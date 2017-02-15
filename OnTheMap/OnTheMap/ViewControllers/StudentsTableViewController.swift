@@ -32,7 +32,12 @@ class StudentsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+       
+        if let url = URL(string: locations[indexPath.row].mediaUrl!) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            
+        }
     }
     
 }

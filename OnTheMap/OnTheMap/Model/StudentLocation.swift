@@ -31,7 +31,7 @@ struct StudentLocation {
         self.firstName = dictionay["firstName"] as? String ?? ""
         self.lastName = dictionay["lastName"] as? String ?? ""
         self.mapString = dictionay["mapString"] as? String ?? ""
-        self.mediaUrl = dictionay["mediaUrl"] as? String ?? ""
+        self.mediaUrl = dictionay["mediaURL"] as? String ?? ""
         self.latitude = dictionay["latitude"] as? Double ?? 0.0
         self.longitude = dictionay["longitude"] as? Double ?? 0.0
         self.createdAt = dictionay["createdAt"] as? String ?? ""
@@ -39,9 +39,9 @@ struct StudentLocation {
     }
     
     func fullName() -> String {
-        if let firstName = firstName, let lastName = lastName {
+        if let firstName = firstName, firstName != "", let lastName = lastName, lastName != "" {
             return "\(firstName) \(lastName)"
         }
-        return ""
+        return "[No Name]"
     }
 }

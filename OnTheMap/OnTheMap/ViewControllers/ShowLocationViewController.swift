@@ -14,10 +14,6 @@ class ShowLocationViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var studentsMapView: MKMapView!
     
-    let regionRadius: CLLocationDistance = 2000
-    var locationManager: CLLocationManager = CLLocationManager()
-
-
     // MARK: - Actions
     @IBAction func cancelButton_Clicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -27,44 +23,9 @@ class ShowLocationViewController: UIViewController {
 
 }
 
-// MARK: - CLLocationManagerDelegate
-
-extension ShowLocationViewController: CLLocationManagerDelegate {
-    
-    func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            studentsMapView.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        if let location = locations.last {
-            self.locationManager.stopUpdatingLocation()
-            zoomToUserCoordinate(userLocation: location)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.locationManager.stopUpdatingLocation()
-    }
-    
-}
-
-
 // MARK: - MKMapViewDelegate
 
 extension ShowLocationViewController: MKMapViewDelegate {
-    
-    func zoomToUserCoordinate(userLocation: CLLocation) {
-        let span = MKCoordinateSpanMake(0.05, 0.05)
-        let location = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.latitude)
-        let region = MKCoordinateRegionMake(location, span)
-        self.studentsMapView.setRegion(region, animated: true)
-    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         

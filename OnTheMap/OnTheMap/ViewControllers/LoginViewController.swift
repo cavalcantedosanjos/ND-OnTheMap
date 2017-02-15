@@ -66,7 +66,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func singUpButton_clicked(_ sender: Any) {
-        
+         UIApplication.shared.open(URL(string: "https://www.udacity.com/account/auth#!/signup")!, options: [:], completionHandler: nil)
     }
     
     // MARK: - Helpers

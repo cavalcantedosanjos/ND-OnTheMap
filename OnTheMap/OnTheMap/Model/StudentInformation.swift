@@ -23,7 +23,6 @@ struct StudentInformation {
     }
     
     init(dictionary: [String : AnyObject]) {
-       
         if let account = dictionary["account"] {
             self.registered = account["registered"] as? Bool ?? false
                         self.key = account["key"] as? String ?? ""

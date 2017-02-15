@@ -8,20 +8,15 @@
 
 import UIKit
 import MapKit
-import CoreLocation
 
 class MapViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet weak var studentsMapView: MKMapView!
     
-    let regionRadius: CLLocationDistance = 2000
-    var locationManager: CLLocationManager = CLLocationManager()
-    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkLocationAuthorizationStatus()
         
         StudentService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
@@ -59,33 +54,6 @@ class MapViewController: UIViewController {
     
 }
 
-// MARK: - CLLocationManagerDelegate
-
-extension MapViewController: CLLocationManagerDelegate {
-    
-    func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            studentsMapView.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        if let location = locations.last {
-            self.locationManager.stopUpdatingLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.locationManager.stopUpdatingLocation()
-    }
-    
-}
-
-
 // MARK: - MKMapViewDelegate
 
 extension MapViewController: MKMapViewDelegate {
@@ -105,5 +73,18 @@ extension MapViewController: MKMapViewDelegate {
             pinView!.annotation = annotation
         }
         
-        return pinView    }
+        return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            if let toOpen = view.annotation?.subtitle! {
+                if let url = URL(string: toOpen) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    
+                }
+            }
+        }
+    }
 }
