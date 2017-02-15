@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
         
         
         enableActivityIndicator(enable: true)
-        
+        self.view.endEditing(true)
         StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (info) in
             
             self.performSegue(withIdentifier: "tabBarSegue", sender: nil)

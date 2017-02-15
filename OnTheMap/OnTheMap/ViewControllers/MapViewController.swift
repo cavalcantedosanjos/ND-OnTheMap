@@ -23,16 +23,39 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         checkLocationAuthorizationStatus()
         
-        StudentService.sharedInstance().getStudentsLocation(onSuccess: { (res) in
+        StudentService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
-        }, onFailure: { 
+            self.addAnnotations(locations: studentsLocation)
+            (UIApplication.shared.delegate as! AppDelegate).locations = []
+            (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
+            
+        }, onFailure: {
             
         }, onCompleted: {
-        
+            
         })
     }
     
     // MARK: - Actions
+    
+    // MARK: - Helpers
+    func addAnnotations(locations: [StudentLocation]) {
+        var annotations: [MKAnnotation] = [MKAnnotation]()
+        
+        for location in locations {
+            
+            let coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = location.fullName()
+            annotation.subtitle = location.mediaUrl!
+            
+            annotations.append(annotation)
+        }
+        
+        self.studentsMapView.showAnnotations(annotations, animated: true)
+    }
     
 }
 
@@ -53,14 +76,13 @@ extension MapViewController: CLLocationManagerDelegate {
         
         if let location = locations.last {
             self.locationManager.stopUpdatingLocation()
-            zoomToUserCoordinate(userLocation: location)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.locationManager.stopUpdatingLocation()
     }
-
+    
 }
 
 
@@ -68,29 +90,20 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: MKMapViewDelegate {
     
-    func zoomToUserCoordinate(userLocation: CLLocation) {
-        let span = MKCoordinateSpanMake(0.05, 0.05)
-        let location = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.latitude)
-        let region = MKCoordinateRegionMake(location, span)
-        self.studentsMapView.setRegion(region, animated: true)
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let reuseIdentifier = "pin"
+        let reuseId = "pin"
         
-        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        if pin == nil {
-            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            pin!.canShowCallout = true
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         else {
-            pin!.annotation = annotation
+            pinView!.annotation = annotation
         }
         
-        pin!.image = UIImage(named: "ic_pin")
-        
-        
-        return pin
-    }
+        return pinView    }
 }

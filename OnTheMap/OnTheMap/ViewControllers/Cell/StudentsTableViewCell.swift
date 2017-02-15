@@ -9,16 +9,12 @@
 import UIKit
 
 class StudentsTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var mediaUrl: UILabel!
+    
+    func setup(location: StudentLocation) {
+        name.text = location.fullName()
+        mediaUrl.text = location.mediaUrl!
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

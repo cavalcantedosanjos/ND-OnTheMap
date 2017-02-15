@@ -22,7 +22,7 @@ class StudentService: NSObject {
                        onSuccess: @escaping (_ student: StudentInformation) -> Void,
                        onFailure: @escaping () -> Void,
                        onCompleted: @escaping ()-> Void) {
-
+        
         let parameters = [
             "udacity": [
                 "username": username,
@@ -30,19 +30,14 @@ class StudentService: NSObject {
             ]
         ]
         
-        ServiceManager.sharedInstance().request(method: .POST, url: URLFactory.autentitionUrl(), parameters: parameters as AnyObject?, onSuccess: { (data) in
-        
-            let s = StudentInformation()
-            do {
-                let newData = data.subdata(in: Range(uncheckedBounds: (5, data.count)))
-                let parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments)
-                print(parsedResult)
-            } catch {
-                let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-                print(userInfo)
-            }
+        ServiceManager.sharedInstance().request(method: .POST, url: URLFactory.autentitionUrl(),
+                                                parameters: parameters as AnyObject?, onSuccess: { (data) in
             
-            onSuccess(s)
+            let newData = data.subdata(in: Range(uncheckedBounds: (5, data.count)))
+            let parsedResult = JSON.deserialize(data: newData)
+            
+            let student = StudentInformation(dictionary: parsedResult as! [String : AnyObject])
+            onSuccess(student)
             
         }, onFailure: {
             
@@ -52,29 +47,21 @@ class StudentService: NSObject {
         
     }
     
-    func getStudentsLocation(onSuccess: @escaping () -> Void,
-                            onFailure: @escaping () -> Void,
-                            onCompleted: @escaping ()-> Void) {
+    func getStudentsLocation(onSuccess: @escaping (_ locations: [StudentLocation]) -> Void,
+                             onFailure: @escaping () -> Void,
+                             onCompleted: @escaping ()-> Void) {
         
         ServiceManager.sharedInstance().request(method: .GET, url: URLFactory.getStudentsLocationUrl(),  onSuccess: { (data) in
             
-            var parsedResult: AnyObject?
-            
-            do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
-                print(parsedResult ?? "")
-            } catch {
-                let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-                print(userInfo)
+            let parsedResult = JSON.deserialize(data: data)
+            if let results = parsedResult["results"] as? [[String:AnyObject]] {
+                var locations: [StudentLocation] = [StudentLocation]()
+                
+                for result in results {
+                    locations.append(StudentLocation(dictionay: result))
+                }
+                onSuccess(locations)
             }
-            
-            let response = parsedResult as! [String: AnyObject]
-            
-            let r = response["result"] ?? nil
-            
-            
-            
-
             
         }, onFailure: {
             
@@ -82,5 +69,6 @@ class StudentService: NSObject {
             onCompleted()
         })
     }
+    
     
 }

@@ -62,16 +62,14 @@ class ServiceManager: NSObject {
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                //
+                //TODO
                 return
             }
             
             if let data = data {
                 onSuccess(data)
             }
-            
-           
-            
+
             onCompleted()
             
         }
