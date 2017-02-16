@@ -15,7 +15,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -190,12 +190,21 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="OnTheMap" id="V9n-7a-SJY">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="u7u-6g-zST"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="u7u-6g-zST">
+                            <connections>
+                                <action selector="logoutButton_Clicked:" destination="c5K-H9-BvD" id="PpD-Fc-Zbs"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="ic_refresh" id="OGW-1h-M54"/>
+                            <barButtonItem image="ic_refresh" id="OGW-1h-M54">
+                                <connections>
+                                    <action selector="refreshButton_Clicked:" destination="c5K-H9-BvD" id="7vM-K7-HiX"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="ic_pin" id="XJy-aA-kQB">
                                 <connections>
-                                    <segue destination="FmR-Rc-rVT" kind="presentation" id="6mv-jY-zzm"/>
+                                    <action selector="markLocation_Clicked:" destination="c5K-H9-BvD" id="ONO-ti-Rud"/>
+                                    <segue destination="FmR-Rc-rVT" kind="presentation" id="wzL-qh-4dU"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -301,7 +310,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eNG-RV-r6m" id="opQ-5g-qgg">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_pin" translatesAutoresizingMaskIntoConstraints="NO" id="rC6-vc-WhV">
@@ -345,9 +354,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="OnTheMap" id="Bm4-iI-VNK">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="kZp-pj-o3j"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="kZp-pj-o3j">
+                            <connections>
+                                <action selector="logoutButton_Clicked:" destination="4Rf-fY-jUh" id="hUP-DS-5o9"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="ic_refresh" id="6Od-AE-QT6"/>
+                            <barButtonItem image="ic_refresh" id="6Od-AE-QT6">
+                                <connections>
+                                    <action selector="refreshButton_Clicked:" destination="4Rf-fY-jUh" id="Xcf-p7-Y6M"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="ic_pin" id="TYo-tC-7NB">
                                 <connections>
                                     <segue destination="FmR-Rc-rVT" kind="presentation" id="IEw-l2-gsA"/>

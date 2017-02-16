@@ -28,7 +28,7 @@ class ServiceManager: NSObject {
     
     func request(method: HttpMethod, url: String, parameters: AnyObject? = nil, headers: [String: String]? = nil,
                  onSuccess: @escaping (_ data: Data) -> Void,
-                 onFailure: @escaping () -> Void,
+                 onFailure: @escaping (_ error: ErrorResponse) -> Void,
                  onCompleted: @escaping ()-> Void) {
         
         let request = NSMutableURLRequest(url: URL(string: url)!)
@@ -57,19 +57,26 @@ class ServiceManager: NSObject {
             
             guard (error == nil) else {
                 //TODO
-                onFailure()
+                
                 return
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                //TODO
+                
+                if let data = data, let parsedResult = JSON.deserialize(data: data) as? [String:AnyObject]  {
+                    let errorResponse = ErrorResponse(dictionary: parsedResult)
+                    onFailure(errorResponse)
+                } else {
+                    //TODO
+                }
+                
                 return
             }
             
             if let data = data {
                 onSuccess(data)
             }
-
+            
             onCompleted()
             
         }

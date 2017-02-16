@@ -20,6 +20,42 @@ class StudentsTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // MARK: - Actions
+    @IBAction func logoutButton_Clicked(_ sender: Any) {
+        self.present(LoginViewController.newInstanceFromStoryboard(), animated: true, completion: nil)
+        
+        StudentService.sharedInstance().logout(onSuccess: {
+            //Nothing
+        }, onFailure: { (error) in
+            //Nothing
+        }, onCompleted: {
+            //Nothing
+        })
+
+    }
+    
+    @IBAction func refreshButton_Clicked(_ sender: Any) {
+        getStudentsLocation()
+    }
+    
+    // MARK: - Services
+    func getStudentsLocation() {
+        
+        StudentService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
+            
+            (UIApplication.shared.delegate as! AppDelegate).locations = []
+            if studentsLocation.count > 0 {
+                (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
+                self.locations = studentsLocation
+            }
+            
+        }, onFailure: { (error) in
+            
+        }, onCompleted: {
+            self.tableView.reloadData()
+        })
+    }
+    
     // MARK: - UITableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
@@ -32,9 +68,9 @@ class StudentsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+        
         if let url = URL(string: locations[indexPath.row].mediaUrl!) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
             
         }

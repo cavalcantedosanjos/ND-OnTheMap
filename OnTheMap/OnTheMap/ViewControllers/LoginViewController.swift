@@ -10,6 +10,16 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    // MARK: - Storyboard Restoration
+    class func newInstanceFromStoryboard() -> LoginViewController {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        
+        return vc
+    }
+
+    
     // MARK: - Properties
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -58,7 +68,7 @@ class LoginViewController: UIViewController {
             
             self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
             
-        }, onFailure: {
+        }, onFailure: { (error) in
             
         }, onCompleted: {
             self.enableActivityIndicator(enable: false)

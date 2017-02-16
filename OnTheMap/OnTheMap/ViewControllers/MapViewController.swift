@@ -17,21 +17,52 @@ class MapViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        getStudentsLocation()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (UIApplication.shared.delegate as! AppDelegate).locations.count > 0{
+            addAnnotations(locations: (UIApplication.shared.delegate as! AppDelegate).locations)
+        }
+    }
+    // MARK: - Actions
+    @IBAction func logoutButton_Clicked(_ sender: Any) {
+        
+        self.present(LoginViewController.newInstanceFromStoryboard(), animated: true, completion: nil)
+        
+        StudentService.sharedInstance().logout(onSuccess: {
+            //Nothing
+        }, onFailure: { (error) in
+            //Nothing
+        }, onCompleted: {
+            //Nothing
+        })
+    }
+    
+    
+    @IBAction func refreshButton_Clicked(_ sender: Any) {
+        studentsMapView.removeAnnotations(studentsMapView.annotations)
+        getStudentsLocation()
+    }
+    
+    // MARK: - Services
+    func getStudentsLocation() {
         
         StudentService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
-            self.addAnnotations(locations: studentsLocation)
             (UIApplication.shared.delegate as! AppDelegate).locations = []
-            (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
-            
-        }, onFailure: {
+            if studentsLocation.count > 0 {
+                (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
+                self.addAnnotations(locations: studentsLocation)
+            }
+
+        }, onFailure: { (error) in
             
         }, onCompleted: {
             
         })
     }
-    
-    // MARK: - Actions
     
     // MARK: - Helpers
     func addAnnotations(locations: [StudentLocation]) {

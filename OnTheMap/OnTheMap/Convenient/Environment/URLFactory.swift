@@ -19,8 +19,5 @@ class URLFactory: NSObject {
         return Environment.sharedInstance().baseParseUrl + "/parse/classes/StudentLocation"
     }
     
-    class func getCurrentUserLocationUrl(uniqueKey: String) -> String {
-         return Environment.sharedInstance().baseParseUrl + "/parse/classes/StudentLocation?where={\"uniqueKey\":\"\(uniqueKey)\"}"
-    }
     
 }
