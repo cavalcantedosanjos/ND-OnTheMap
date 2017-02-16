@@ -51,27 +51,27 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     @IBAction func loginButton_clicked(_ sender: Any) {
         
-        guard let username = emailTextField.text, username != "" || username != " " else {
+        guard let username = emailTextField.text, !username.isEmpty  else {
             showMessage(message: "Required E-mail.", title: "Invalid Field!")
             return
         }
         
-        guard let password = passwordTextField.text, password != "" || password != " " else {
+        guard let password = passwordTextField.text, !password.isEmpty else {
             showMessage(message: "Required Password.", title: "Invalid Field!")
             return
         }
         
         
-        enableActivityIndicator(enable: true)
+       // enableActivityIndicator(enable: true)
         self.view.endEditing(true)
         StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (info) in
             
             self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
             
         }, onFailure: { (error) in
-            
+            self.showMessage(message: error.error!, title: "")
         }, onCompleted: {
-            self.enableActivityIndicator(enable: false)
+            //  self.enableActivityIndicator(enable: false)
         })
     }
     

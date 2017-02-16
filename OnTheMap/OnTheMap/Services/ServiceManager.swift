@@ -63,8 +63,10 @@ class ServiceManager: NSObject {
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 
-                if let data = data, let parsedResult = JSON.deserialize(data: data) as? [String:AnyObject]  {
-                    let errorResponse = ErrorResponse(dictionary: parsedResult)
+                if let data = data {
+                    let newData = data.subdata(in: Range(uncheckedBounds: (5, data.count)))
+                    let parsedResult = JSON.deserialize(data: newData) as? [String:AnyObject]
+                    let errorResponse = ErrorResponse(dictionary: parsedResult!)
                     onFailure(errorResponse)
                 } else {
                     //TODO
