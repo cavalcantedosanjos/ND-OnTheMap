@@ -18,8 +18,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getStudentsLocation()
+        getCurrentLocation()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (UIApplication.shared.delegate as! AppDelegate).locations.count > 0{
@@ -46,6 +47,24 @@ class MapViewController: UIViewController {
         getStudentsLocation()
     }
     
+    @IBAction func pinButton_Clicked(_ sender: Any) {
+        if StudentInformation.currentUser.location != nil{
+            let alert: UIAlertController = UIAlertController(title: "", message: "You Have Already Posted a Student Location. Would You Like to Overwrite. Your Current Location?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
+                 self.performSegue(withIdentifier: "locationSegue", sender: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+                 alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        performSegue(withIdentifier: "locationSegue", sender: nil)
+    }
+    
     // MARK: - Services
     func getStudentsLocation() {
         
@@ -54,13 +73,31 @@ class MapViewController: UIViewController {
             (UIApplication.shared.delegate as! AppDelegate).locations = []
             if studentsLocation.count > 0 {
                 (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
-                self.addAnnotations(locations: studentsLocation)
+                
+                DispatchQueue.main.async {
+                    self.addAnnotations(locations: studentsLocation)
+                }
+                
             }
 
         }, onFailure: { (error) in
-            
+             self.showMessage(message: error.error!, title: "")
         }, onCompleted: {
+            //Nothing
+        })
+    }
+    
+    func getCurrentLocation() {
+        StudentService.sharedInstance().getCurrentLocation(onSuccess: { (locations) in
             
+            if let location = locations.first{
+                StudentInformation.currentUser.location = location
+            }
+            
+        }, onFailure: { (errorRespons) in
+            //Nothing
+        }, onCompleted: {
+            //Nothing
         })
     }
     
@@ -83,6 +120,15 @@ class MapViewController: UIViewController {
         self.studentsMapView.showAnnotations(annotations, animated: true)
     }
     
+    func showMessage(message: String, title: String) {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - MKMapViewDelegate

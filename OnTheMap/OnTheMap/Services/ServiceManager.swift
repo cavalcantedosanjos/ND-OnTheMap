@@ -31,7 +31,9 @@ class ServiceManager: NSObject {
                  onFailure: @escaping (_ error: ErrorResponse) -> Void,
                  onCompleted: @escaping ()-> Void) {
         
-        let request = NSMutableURLRequest(url: URL(string: url)!)
+        let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let request = NSMutableURLRequest(url: URL(string: encodeUrl!)!)
+        
         request.httpMethod	= method.rawValue
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")

@@ -24,6 +24,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loginButton: CustomButton!
     
     
     // MARK: - Life Cycle
@@ -62,16 +63,17 @@ class LoginViewController: UIViewController {
         }
         
         
-       // enableActivityIndicator(enable: true)
+       enableActivityIndicator(enable: true)
         self.view.endEditing(true)
         StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (info) in
             
+            StudentInformation.currentUser = info
             self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
             
         }, onFailure: { (error) in
             self.showMessage(message: error.error!, title: "")
         }, onCompleted: {
-            //  self.enableActivityIndicator(enable: false)
+            self.enableActivityIndicator(enable: false)
         })
     }
     
@@ -93,12 +95,11 @@ class LoginViewController: UIViewController {
     func enableActivityIndicator(enable: Bool){
         if enable {
             activityIndicator.startAnimating()
-            UIApplication.shared.beginIgnoringInteractionEvents()
         } else {
             activityIndicator.stopAnimating()
-            UIApplication.shared.endIgnoringInteractionEvents()
         }
         
+        loginButton.isUserInteractionEnabled = !enable
         activityIndicator.isHidden = !enable
     }
     

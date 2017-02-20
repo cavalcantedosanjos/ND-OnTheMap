@@ -113,11 +113,12 @@
                                         <rect key="frame" x="16" y="16" width="288" height="281.5"/>
                                     </imageView>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aLv-0J-wb5">
-                                        <rect key="frame" x="142" y="255.5" width="37" height="37"/>
+                                        <rect key="frame" x="141.5" y="447" width="37" height="37"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="aLv-0J-wb5" firstAttribute="centerX" secondItem="7aL-a2-DlY" secondAttribute="centerX" id="6ff-2T-nWs"/>
                                     <constraint firstItem="HIR-f8-WJT" firstAttribute="top" secondItem="av1-cR-9Bi" secondAttribute="top" constant="16" id="7no-ha-jED"/>
                                     <constraint firstItem="wQl-bb-WNG" firstAttribute="centerX" secondItem="av1-cR-9Bi" secondAttribute="centerX" id="7pF-ky-iBe"/>
                                     <constraint firstItem="wQl-bb-WNG" firstAttribute="top" secondItem="7aL-a2-DlY" secondAttribute="bottom" constant="16" id="9Ur-RB-njp"/>
@@ -127,10 +128,9 @@
                                     <constraint firstAttribute="bottom" secondItem="wQl-bb-WNG" secondAttribute="bottom" constant="16" id="ER0-ht-a6u"/>
                                     <constraint firstItem="aNW-6s-5UL" firstAttribute="leading" secondItem="av1-cR-9Bi" secondAttribute="leading" constant="16" id="QC2-fO-cts"/>
                                     <constraint firstItem="7aL-a2-DlY" firstAttribute="top" secondItem="3S0-Xt-YTj" secondAttribute="bottom" constant="16" id="QXQ-oN-Xyn"/>
+                                    <constraint firstItem="aLv-0J-wb5" firstAttribute="centerY" secondItem="7aL-a2-DlY" secondAttribute="centerY" id="SVn-4R-6oz"/>
                                     <constraint firstAttribute="trailing" secondItem="tBt-u7-N8Q" secondAttribute="trailing" constant="16" id="aYW-wE-S0H"/>
-                                    <constraint firstItem="aLv-0J-wb5" firstAttribute="centerX" secondItem="av1-cR-9Bi" secondAttribute="centerX" id="afI-jZ-pkA"/>
                                     <constraint firstItem="tBt-u7-N8Q" firstAttribute="top" secondItem="HIR-f8-WJT" secondAttribute="bottom" constant="16" id="eDU-8Y-7Uw"/>
-                                    <constraint firstItem="aLv-0J-wb5" firstAttribute="centerY" secondItem="av1-cR-9Bi" secondAttribute="centerY" id="fFJ-nb-bCP"/>
                                     <constraint firstAttribute="trailing" secondItem="aNW-6s-5UL" secondAttribute="trailing" constant="16" id="hHT-Yv-MuM"/>
                                     <constraint firstAttribute="trailing" secondItem="7aL-a2-DlY" secondAttribute="trailing" constant="16" id="n7h-q9-bSo"/>
                                     <constraint firstItem="HIR-f8-WJT" firstAttribute="leading" secondItem="av1-cR-9Bi" secondAttribute="leading" constant="16" id="nTR-JN-byW"/>
@@ -154,6 +154,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="aLv-0J-wb5" id="KAJ-g0-wH9"/>
                         <outlet property="emailTextField" destination="aNW-6s-5UL" id="cKo-hm-PkC"/>
+                        <outlet property="loginButton" destination="7aL-a2-DlY" id="qJq-AQ-jtK"/>
                         <outlet property="passwordTextField" destination="3S0-Xt-YTj" id="F6y-he-MRm"/>
                         <segue destination="wEx-M5-OqF" kind="show" identifier="tabBarSegue" id="00c-hG-vhH"/>
                     </connections>
@@ -203,14 +204,14 @@
                             </barButtonItem>
                             <barButtonItem image="ic_pin" id="XJy-aA-kQB">
                                 <connections>
-                                    <action selector="markLocation_Clicked:" destination="c5K-H9-BvD" id="ONO-ti-Rud"/>
-                                    <segue destination="FmR-Rc-rVT" kind="presentation" id="wzL-qh-4dU"/>
+                                    <action selector="pinButton_Clicked:" destination="c5K-H9-BvD" id="gmi-hx-02a"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="studentsMapView" destination="XyX-bR-kBD" id="m02-DD-rhg"/>
+                        <segue destination="FmR-Rc-rVT" kind="presentation" identifier="locationSegue" id="Y85-I5-aZT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kDC-Ni-WBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -365,13 +366,12 @@
                                     <action selector="refreshButton_Clicked:" destination="4Rf-fY-jUh" id="Xcf-p7-Y6M"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="ic_pin" id="TYo-tC-7NB">
-                                <connections>
-                                    <segue destination="FmR-Rc-rVT" kind="presentation" id="IEw-l2-gsA"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem image="ic_pin" id="TYo-tC-7NB"/>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="FmR-Rc-rVT" kind="presentation" id="Kg9-PO-bCO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZG-YT-6ZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -403,21 +403,21 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="studying" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqs-7D-Osg">
-                                                <rect key="frame" x="127" y="81" width="66" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <rect key="frame" x="121" y="80" width="78" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                <color key="textColor" red="0.1019607843" green="0.19215686269999999" blue="0.36470588240000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7a-yz-NRn">
-                                                <rect key="frame" x="134.5" y="110" width="51.5" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <rect key="frame" x="132" y="111" width="56.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
+                                                <color key="textColor" red="0.92468649150000004" green="0.92538815740000002" blue="0.92479509120000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hl4-NF-1Gq">
-                                                <rect key="frame" x="105" y="52" width="111" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <rect key="frame" x="99.5" y="49" width="122" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
+                                                <color key="textColor" red="0.92468649150000004" green="0.92538815740000002" blue="0.92479509120000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -442,15 +442,23 @@
                                                     <constraint firstAttribute="height" constant="40" id="TtV-jf-yFm"/>
                                                 </constraints>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="FmR-Rc-rVT" id="sy6-P2-aUT"/>
+                                                </connections>
                                             </textField>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2el-2B-qze">
+                                                <rect key="frame" x="141.5" y="73" width="37" height="37"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.1019607843" green="0.19215686269999999" blue="0.36470588240000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="Pmy-8t-bR1" firstAttribute="leading" secondItem="Hia-IO-UNG" secondAttribute="leading" constant="16" id="1sa-dl-1Eq"/>
+                                            <constraint firstItem="2el-2B-qze" firstAttribute="centerY" secondItem="Hia-IO-UNG" secondAttribute="centerY" id="7ge-Om-0bd"/>
                                             <constraint firstAttribute="trailing" secondItem="Pmy-8t-bR1" secondAttribute="trailing" constant="16" id="AlB-g7-O2O"/>
                                             <constraint firstItem="Pmy-8t-bR1" firstAttribute="top" secondItem="Hia-IO-UNG" secondAttribute="top" constant="16" id="Yeq-Gs-SO1"/>
+                                            <constraint firstItem="2el-2B-qze" firstAttribute="centerX" secondItem="Hia-IO-UNG" secondAttribute="centerX" id="Z9c-6O-xDu"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6A3-y3-fv3">
@@ -471,7 +479,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="WYb-7a-4DU" kind="show" id="pr1-YM-sDS"/>
+                                                    <action selector="findButton_Clicked:" destination="FmR-Rc-rVT" eventType="touchUpInside" id="ZOO-oJ-lCm"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -509,6 +517,12 @@
                             <constraint firstItem="nkH-PN-PLS" firstAttribute="top" secondItem="uFe-vF-1rG" secondAttribute="bottom" id="jxD-3v-6qI"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="2el-2B-qze" id="t7h-Lp-rV9"/>
+                        <outlet property="findButton" destination="aEt-jl-jLH" id="ut3-9R-0yR"/>
+                        <outlet property="locationTextField" destination="Pmy-8t-bR1" id="ntT-0d-Bae"/>
+                        <segue destination="WYb-7a-4DU" kind="show" identifier="showLocationSegue" id="617-bL-qgr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0aS-Ov-nMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -599,6 +613,6 @@
         <image name="ic_refresh" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IEw-l2-gsA"/>
+        <segue reference="Y85-I5-aZT"/>
     </inferredMetricsTieBreakers>
 </document>

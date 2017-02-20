@@ -78,7 +78,7 @@ class StudentService: NSObject {
         
     }
     
-    func getStudentsLocation(_ limit: Int? = 100, _ order: String? = "updatedAt", onSuccess: @escaping (_ locations: [StudentLocation]) -> Void,
+    func getStudentsLocation(withLimit limit: Int = 100, withOrder order: String = "updatedAt", onSuccess: @escaping (_ locations: [StudentLocation]) -> Void,
                              onFailure: @escaping (_ error: ErrorResponse) -> Void,
                              onCompleted: @escaping ()-> Void) {
         
@@ -108,7 +108,7 @@ class StudentService: NSObject {
                             onFailure: @escaping (_ error: ErrorResponse) -> Void,
                             onCompleted: @escaping ()-> Void) {
         
-        let url = URLFactory.getStudentsLocationUrl() + "?where={\"uniqueKey\":\"\(StudentInformation.currentUser.key!)\"}"
+        let url = URLFactory.getStudentsLocationUrl() + "?where={\"uniqueKey\":\"\(StudentInformation.currentUser.key!)\"}&order=-updatedAt"
         
         ServiceManager.sharedInstance().request(method: .POST, url: url, onSuccess: { (data) in
             

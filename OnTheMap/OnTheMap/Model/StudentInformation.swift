@@ -10,7 +10,7 @@ import UIKit
 
 struct StudentInformation {
     
-    static let currentUser = StudentInformation()
+    static var currentUser = StudentInformation()
     
     var key: String?
     var registered: Bool?
