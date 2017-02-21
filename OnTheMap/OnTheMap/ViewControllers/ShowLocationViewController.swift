@@ -10,22 +10,31 @@ import UIKit
 import MapKit
 import CoreLocation
 
+protocol ShowLocationViewControllerDelegate {
+    func didFinishedPostLocation()
+}
+
 class ShowLocationViewController: UIViewController {
-   
+    
     // MARK: - Properties
     @IBOutlet weak var studentsMapView: MKMapView!
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var placemark: CLPlacemark?
+    var delegate: ShowLocationViewControllerDelegate?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sendButton.isEnabled = false
+        enableActivityIndicator(enable: false)
         
         if let place = placemark {
             addAnnotations(location: place)
+        } else {
+            showMessage(message: "Location Not Found.", title: "")
         }
     }
     
@@ -35,7 +44,7 @@ class ShowLocationViewController: UIViewController {
     }
     
     @IBAction func sendButton_Clicked(_ sender: Any) {
-    
+        
         guard let link = linkTextField.text, !link.isEmpty else {
             showMessage(message: "Required Link.", title: "Invalid Field!")
             return
@@ -44,29 +53,30 @@ class ShowLocationViewController: UIViewController {
         if let place = placemark, let coordinate = placemark?.location?.coordinate {
             createLocation(mapString: "\(place.name!), \(place.administrativeArea!)", mediaURL: link, latitude: coordinate.latitude, longitude: coordinate.longitude)
         } else {
-            //TODO
+            showMessage(message: "Location Not Found.", title: "")
         }
-       
+        
         
     }
     
     // MARK: - Service
     func createLocation(mapString: String, mediaURL: String, latitude: Double, longitude: Double) {
-        LocationService.sharedInstance().createLocation(mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude, onSuccess: { 
+        enableActivityIndicator(enable: true)
+        LocationService.sharedInstance().createLocation(mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude, onSuccess: {
             
-            
+            self.dismissAllModally()
             
         }, onFailure: { (errorResponse) in
             self.showMessage(message: errorResponse.error!, title: "")
         }, onCompleted: {
-            
+            self.enableActivityIndicator(enable: false)
         })
     }
     
     // MARK: - Helpers
     func addAnnotations(location: CLPlacemark) {
         var annotations: [MKAnnotation] = [MKAnnotation]()
-    
+        
         let annotation = MKPointAnnotation()
         annotation.coordinate = (location.location?.coordinate)!
         annotation.title = location.name! + location.administrativeArea!
@@ -84,6 +94,21 @@ class ShowLocationViewController: UIViewController {
         }))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func enableActivityIndicator(enable: Bool){
+        if enable {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+        
+        activityIndicator.isHidden = !enable
+    }
+    
+    func dismissAllModally() {
+                self.dismiss(animated: false, completion: nil)
+        self.delegate?.didFinishedPostLocation()
     }
 }
 

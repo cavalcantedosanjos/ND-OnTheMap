@@ -13,12 +13,13 @@ class MapViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet weak var studentsMapView: MKMapView!
+    let kLocationSegue = "locationSegue"
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         getStudentsLocation()
-        getCurrentLocation()
+                getCurrentLocation()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -27,18 +28,18 @@ class MapViewController: UIViewController {
             addAnnotations(locations: (UIApplication.shared.delegate as! AppDelegate).locations)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == kLocationSegue) {
+            let vc = segue.destination as! SearchLocationViewController
+            vc.delegate = self
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func logoutButton_Clicked(_ sender: Any) {
-        
         self.present(LoginViewController.newInstanceFromStoryboard(), animated: true, completion: nil)
-        
-        StudentService.sharedInstance().logout(onSuccess: {
-            //Nothing
-        }, onFailure: { (error) in
-            //Nothing
-        }, onCompleted: {
-            //Nothing
-        })
+        logout()
     }
     
     
@@ -48,6 +49,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func pinButton_Clicked(_ sender: Any) {
+        
         if User.current.location != nil{
             let alert: UIAlertController = UIAlertController(title: "", message: "You Have Already Posted a Student Location. Would You Like to Overwrite. Your Current Location?", preferredStyle: .alert)
             
@@ -101,6 +103,16 @@ class MapViewController: UIViewController {
         })
     }
     
+    func logout() {
+        StudentService.sharedInstance().logout(onSuccess: {
+            //Nothing
+        }, onFailure: { (error) in
+            //Nothing
+        }, onCompleted: {
+            //Nothing
+        })
+    }
+    
     // MARK: - Helpers
     func addAnnotations(locations: [StudentLocation]) {
         var annotations: [MKAnnotation] = [MKAnnotation]()
@@ -132,7 +144,6 @@ class MapViewController: UIViewController {
 }
 
 // MARK: - MKMapViewDelegate
-
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -159,9 +170,15 @@ extension MapViewController: MKMapViewDelegate {
                 if let url = URL(string: toOpen) {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 } else {
-                    
+                    showMessage(message: "Can't Open URL", title: "")
                 }
             }
         }
+    }
+}
+
+extension MapViewController: SearchLocationViewControllerDelegate {
+    func didFinishedPostLocation() {
+        self.getStudentsLocation()
     }
 }

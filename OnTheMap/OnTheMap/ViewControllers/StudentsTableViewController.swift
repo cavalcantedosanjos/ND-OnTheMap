@@ -12,13 +12,15 @@ class StudentsTableViewController: UITableViewController {
     
     // MARK: - Properties
     var locations: [StudentLocation] = [StudentLocation]()
-    
+    let kLocationSegue = "locationSegue"
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         locations = (UIApplication.shared.delegate as! AppDelegate).locations
         tableView.reloadData()
     }
+    
+    
     
     // MARK: - Actions
     @IBAction func logoutButton_Clicked(_ sender: Any) {
@@ -53,7 +55,7 @@ class StudentsTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
         
-        performSegue(withIdentifier: "locationSegue", sender: nil)
+        performSegue(withIdentifier: kLocationSegue, sender: nil)
     }
     // MARK: - Services
     func getStudentsLocation() {

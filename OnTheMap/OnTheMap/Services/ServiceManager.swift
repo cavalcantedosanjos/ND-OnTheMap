@@ -58,7 +58,8 @@ class ServiceManager: NSObject {
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             
             guard (error == nil) else {
-                //TODO
+                let errorResponse = ErrorResponse(code: "", error: error.debugDescription)
+                onFailure(errorResponse)
                 
                 return
             }
@@ -71,7 +72,8 @@ class ServiceManager: NSObject {
                     let errorResponse = ErrorResponse(dictionary: parsedResult!)
                     onFailure(errorResponse)
                 } else {
-                    //TODO
+                    let errorResponse = ErrorResponse(code: "", error: "Unexpected error")
+                    onFailure(errorResponse)
                 }
                 
                 return

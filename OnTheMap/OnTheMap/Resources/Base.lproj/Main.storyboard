@@ -604,10 +604,15 @@
                                             <action selector="sendButton_Clicked:" destination="WYb-7a-4DU" eventType="touchUpInside" id="bo9-nn-Zsd"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="M8T-Zi-Y2D">
+                                        <rect key="frame" x="142" y="166" width="37" height="37"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="nM3-7W-N3I" firstAttribute="top" secondItem="M8T-Zi-Y2D" secondAttribute="bottom" constant="16" id="Ebr-yf-eXe"/>
                                     <constraint firstItem="Dx2-rw-BUD" firstAttribute="centerX" secondItem="0lQ-n8-cwG" secondAttribute="centerX" id="FsR-7A-s4I"/>
+                                    <constraint firstItem="M8T-Zi-Y2D" firstAttribute="centerX" secondItem="0lQ-n8-cwG" secondAttribute="centerX" id="FzK-8o-wPa"/>
                                     <constraint firstItem="0lQ-n8-cwG" firstAttribute="top" secondItem="J4u-PM-V5B" secondAttribute="top" id="HtB-7Y-Jh0"/>
                                     <constraint firstAttribute="trailing" secondItem="nM3-7W-N3I" secondAttribute="trailing" id="UVl-fq-mJu"/>
                                     <constraint firstItem="0lQ-n8-cwG" firstAttribute="height" secondItem="J4u-PM-V5B" secondAttribute="height" multiplier="0.4" id="V9h-ZN-v6D"/>
@@ -629,6 +634,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="M8T-Zi-Y2D" id="Ue3-4t-4r1"/>
                         <outlet property="linkTextField" destination="zDE-Z9-KIz" id="Sq2-dn-aLV"/>
                         <outlet property="sendButton" destination="Dx2-rw-BUD" id="AGM-5a-1ub"/>
                         <outlet property="studentsMapView" destination="nM3-7W-N3I" id="nDa-4g-t7O"/>
