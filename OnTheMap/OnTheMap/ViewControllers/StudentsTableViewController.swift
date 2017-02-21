@@ -13,6 +13,7 @@ class StudentsTableViewController: UITableViewController {
     // MARK: - Properties
     var locations: [StudentLocation] = [StudentLocation]()
     let kLocationSegue = "locationSegue"
+    
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

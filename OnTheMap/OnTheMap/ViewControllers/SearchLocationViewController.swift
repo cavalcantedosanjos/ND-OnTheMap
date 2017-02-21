@@ -9,10 +9,6 @@
 import UIKit
 import CoreLocation
 
-protocol SearchLocationViewControllerDelegate {
-    func didFinishedPostLocation()
-}
-
 class SearchLocationViewController: UIViewController {
     
     // MARK: - Properties
@@ -20,7 +16,6 @@ class SearchLocationViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var findButton: CustomButton!
     let kShowLocationSegue = "showLocationSegue"
-    var delegate: SearchLocationViewControllerDelegate?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -43,7 +38,6 @@ class SearchLocationViewController: UIViewController {
         if (segue.identifier == kShowLocationSegue){
             let vc = segue.destination as! ShowLocationViewController
             vc.placemark = sender as? CLPlacemark
-            vc.delegate = self
         }
     }
     
@@ -72,6 +66,7 @@ class SearchLocationViewController: UIViewController {
             }
             
             if let place = places?.first {
+
                 self.performSegue(withIdentifier: self.kShowLocationSegue, sender: place)
             }
         }
@@ -136,13 +131,5 @@ extension SearchLocationViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-
-// MARK: - ShowLocationViewControllerDelegate
-extension SearchLocationViewController: ShowLocationViewControllerDelegate {
-    func didFinishedPostLocation(){
-        self.dismiss(animated: false, completion: nil)
-        delegate?.didFinishedPostLocation()
     }
 }

@@ -525,7 +525,7 @@
                         <outlet property="activityIndicator" destination="2el-2B-qze" id="t7h-Lp-rV9"/>
                         <outlet property="findButton" destination="aEt-jl-jLH" id="ut3-9R-0yR"/>
                         <outlet property="locationTextField" destination="Pmy-8t-bR1" id="ntT-0d-Bae"/>
-                        <segue destination="WYb-7a-4DU" kind="show" identifier="showLocationSegue" id="617-bL-qgr"/>
+                        <segue destination="WYb-7a-4DU" kind="presentation" identifier="showLocationSegue" id="617-bL-qgr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0aS-Ov-nMU" userLabel="First Responder" sceneMemberID="firstResponder"/>

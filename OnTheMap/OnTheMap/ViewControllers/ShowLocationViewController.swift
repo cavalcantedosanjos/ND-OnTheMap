@@ -10,10 +10,6 @@ import UIKit
 import MapKit
 import CoreLocation
 
-protocol ShowLocationViewControllerDelegate {
-    func didFinishedPostLocation()
-}
-
 class ShowLocationViewController: UIViewController {
     
     // MARK: - Properties
@@ -22,7 +18,6 @@ class ShowLocationViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var placemark: CLPlacemark?
-    var delegate: ShowLocationViewControllerDelegate?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -64,8 +59,8 @@ class ShowLocationViewController: UIViewController {
         enableActivityIndicator(enable: true)
         LocationService.sharedInstance().createLocation(mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude, onSuccess: {
             
-            self.dismissAllModally()
-            
+          
+       
         }, onFailure: { (errorResponse) in
             self.showMessage(message: errorResponse.error!, title: "")
         }, onCompleted: {
@@ -106,10 +101,6 @@ class ShowLocationViewController: UIViewController {
         activityIndicator.isHidden = !enable
     }
     
-    func dismissAllModally() {
-                self.dismiss(animated: false, completion: nil)
-        self.delegate?.didFinishedPostLocation()
-    }
 }
 
 // MARK: - MKMapViewDelegate

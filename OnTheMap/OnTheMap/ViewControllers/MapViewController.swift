@@ -19,20 +19,12 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getStudentsLocation()
-                getCurrentLocation()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (UIApplication.shared.delegate as! AppDelegate).locations.count > 0{
             addAnnotations(locations: (UIApplication.shared.delegate as! AppDelegate).locations)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == kLocationSegue) {
-            let vc = segue.destination as! SearchLocationViewController
-            vc.delegate = self
         }
     }
     
@@ -49,22 +41,9 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func pinButton_Clicked(_ sender: Any) {
-        
-        if User.current.location != nil{
-            let alert: UIAlertController = UIAlertController(title: "", message: "You Have Already Posted a Student Location. Would You Like to Overwrite. Your Current Location?", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
-                 self.performSegue(withIdentifier: "locationSegue", sender: nil)
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
-                 alert.dismiss(animated: true, completion: nil)
-            }))
-            
-            self.present(alert, animated: true, completion: nil)
+        getCurrentLocation {
+            self.checkLocation()
         }
-        
-        performSegue(withIdentifier: "locationSegue", sender: nil)
     }
     
     // MARK: - Services
@@ -89,15 +68,16 @@ class MapViewController: UIViewController {
         })
     }
     
-    func getCurrentLocation() {
+    func getCurrentLocation(onCompletedWithSuccess: @escaping ()-> Void) {
         LocationService.sharedInstance().getCurrentLocation(onSuccess: { (locations) in
             
             if let location = locations.first{
                 User.current.location = location
             }
+            onCompletedWithSuccess()
             
         }, onFailure: { (errorRespons) in
-            //Nothing
+            self.showMessage(message: errorRespons.error!, title: "")
         }, onCompleted: {
             //Nothing
         })
@@ -141,6 +121,25 @@ class MapViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func checkLocation() {
+        
+        if User.current.location != nil{
+            let alert: UIAlertController = UIAlertController(title: "", message: "You Have Already Posted a Student Location. Would You Like to Overwrite. Your Current Location?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
+                self.performSegue(withIdentifier: "locationSegue", sender: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        performSegue(withIdentifier: "locationSegue", sender: nil)
+    }
 }
 
 // MARK: - MKMapViewDelegate
@@ -174,11 +173,5 @@ extension MapViewController: MKMapViewDelegate {
                 }
             }
         }
-    }
-}
-
-extension MapViewController: SearchLocationViewControllerDelegate {
-    func didFinishedPostLocation() {
-        self.getStudentsLocation()
     }
 }
