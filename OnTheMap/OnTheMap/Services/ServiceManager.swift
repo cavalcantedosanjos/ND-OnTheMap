@@ -26,7 +26,7 @@ class ServiceManager: NSObject {
         case PUT = "PUT"
     }
     
-    func request(method: HttpMethod, url: String, parameters: AnyObject? = nil, headers: [String: String]? = nil,
+    func request(method: HttpMethod, url: String, parameters: [String: Any]? = nil, headers: [String: String]? = nil,
                  onSuccess: @escaping (_ data: Data) -> Void,
                  onFailure: @escaping (_ error: ErrorResponse) -> Void,
                  onCompleted: @escaping ()-> Void) {

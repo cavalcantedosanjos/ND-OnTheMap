@@ -15,7 +15,11 @@ class URLFactory: NSObject {
         return Environment.sharedInstance().baseUdacityUrl + "/api/session"
     }
     
-    class func getStudentsLocationUrl() -> String {
+    class func userInformationUrl(key: String) -> String {
+        return Environment.sharedInstance().baseUdacityUrl + "/api/users/\(key)"
+    }
+    
+    class func studentsLocationUrl() -> String {
         return Environment.sharedInstance().baseParseUrl + "/parse/classes/StudentLocation"
     }
     

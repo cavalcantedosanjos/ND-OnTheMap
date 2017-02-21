@@ -10,41 +10,51 @@ import UIKit
 import CoreLocation
 
 class SearchLocationViewController: UIViewController {
-
+    
     // MARK: - Properties
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var findButton: CustomButton!
+    let kShowLocationSegue = "showLocationSegue"
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         findButton.isEnabled = false
+        enableActivityIndicator(enable: false)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         subscribeToKeyboardNotifications()
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == kShowLocationSegue){
+            let vc = segue.destination as! ShowLocationViewController
+            vc.placemark = sender as? CLPlacemark
+        }
+    }
     
     // MARK: - Actions
     @IBAction func cancelButton_Clicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func findButton_Clicked(_ sender: Any) {
         
         guard let location = locationTextField.text, !location.isEmpty else {
-            
+            showMessage(message: "Required location.", title: "Invalid Field!")
             return
         }
         
         enableActivityIndicator(enable: true)
-        let geocoder = git ()
+        let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(locationTextField.text!) { (places, error) in
             
@@ -57,14 +67,11 @@ class SearchLocationViewController: UIViewController {
             }
             
             if let place = places?.first {
-                
+                self.performSegue(withIdentifier: self.kShowLocationSegue, sender: place)
             }
-
         }
-    
-        performSegue(withIdentifier: "showLocationSegue", sender: nil)
     }
-
+    
     // MARK: - Helpers
     func enableActivityIndicator(enable: Bool){
         if enable {
@@ -72,7 +79,7 @@ class SearchLocationViewController: UIViewController {
         } else {
             activityIndicator.stopAnimating()
         }
-
+        
         activityIndicator.isHidden = !enable
     }
     
@@ -109,7 +116,7 @@ class SearchLocationViewController: UIViewController {
     func keyboardWillHide(notification: Notification) {
         self.view.frame.origin.y = 0
     }
-   
+    
 }
 
 // MARK: - UITextFieldDelegate

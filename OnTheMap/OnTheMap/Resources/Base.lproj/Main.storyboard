@@ -366,11 +366,15 @@
                                     <action selector="refreshButton_Clicked:" destination="4Rf-fY-jUh" id="Xcf-p7-Y6M"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="ic_pin" id="TYo-tC-7NB"/>
+                            <barButtonItem image="ic_pin" id="TYo-tC-7NB">
+                                <connections>
+                                    <action selector="pinButton_Clicked:" destination="4Rf-fY-jUh" id="tte-dT-Xy0"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <segue destination="FmR-Rc-rVT" kind="presentation" id="Kg9-PO-bCO"/>
+                        <segue destination="FmR-Rc-rVT" kind="presentation" identifier="locationSegue" id="Kg9-PO-bCO"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZG-YT-6ZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -531,7 +535,7 @@
         <!--Show Location View Controller-->
         <scene sceneID="8Me-Zw-Pd8">
             <objects>
-                <viewController id="WYb-7a-4DU" customClass="ShowLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowLocationViewController" id="WYb-7a-4DU" customClass="ShowLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="V4V-Ip-NBy"/>
                         <viewControllerLayoutGuide type="bottom" id="JU2-vb-Ikg"/>
@@ -555,11 +559,26 @@
                                                     <action selector="cancelButton_Clicked:" destination="WYb-7a-4DU" eventType="touchUpInside" id="Y8J-Xx-X6V"/>
                                                 </connections>
                                             </button>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a Link to Share Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDE-Z9-KIz">
+                                                <rect key="frame" x="16" y="89" width="288" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="KmQ-0d-ns9"/>
+                                                </constraints>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="WYb-7a-4DU" id="0zP-M7-FE1"/>
+                                                </connections>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.1019607843" green="0.19215686269999999" blue="0.36470588240000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstItem="zDE-Z9-KIz" firstAttribute="centerY" secondItem="0lQ-n8-cwG" secondAttribute="centerY" id="Jyq-sz-Xc7"/>
                                             <constraint firstItem="35c-OO-SUL" firstAttribute="top" secondItem="0lQ-n8-cwG" secondAttribute="top" constant="8" id="Ouj-Rg-Qab"/>
                                             <constraint firstAttribute="trailing" secondItem="35c-OO-SUL" secondAttribute="trailing" constant="8" id="oSO-jB-L8V"/>
+                                            <constraint firstAttribute="trailing" secondItem="zDE-Z9-KIz" secondAttribute="trailing" constant="16" id="wBD-ZG-FXe"/>
+                                            <constraint firstItem="zDE-Z9-KIz" firstAttribute="leading" secondItem="0lQ-n8-cwG" secondAttribute="leading" constant="16" id="yCL-ih-efY"/>
                                         </constraints>
                                     </view>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nM3-7W-N3I">
@@ -568,24 +587,36 @@
                                             <outlet property="delegate" destination="WYb-7a-4DU" id="9jc-Kg-D4c"/>
                                         </connections>
                                     </mapView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dx2-rw-BUD">
-                                        <rect key="frame" x="16" y="502" width="288" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dx2-rw-BUD" customClass="CustomButton" customModule="OnTheMap" customModuleProvider="target">
+                                        <rect key="frame" x="110" y="476" width="100" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="Khz-zt-Vec"/>
+                                            <constraint firstAttribute="height" constant="40" id="LNe-Wu-9kC"/>
+                                        </constraints>
                                         <state key="normal" title="Submit"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="sendButton_Clicked:" destination="WYb-7a-4DU" eventType="touchUpInside" id="bo9-nn-Zsd"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Dx2-rw-BUD" firstAttribute="leading" secondItem="J4u-PM-V5B" secondAttribute="leading" constant="16" id="9yb-Dx-Iz1"/>
+                                    <constraint firstItem="Dx2-rw-BUD" firstAttribute="centerX" secondItem="0lQ-n8-cwG" secondAttribute="centerX" id="FsR-7A-s4I"/>
                                     <constraint firstItem="0lQ-n8-cwG" firstAttribute="top" secondItem="J4u-PM-V5B" secondAttribute="top" id="HtB-7Y-Jh0"/>
                                     <constraint firstAttribute="trailing" secondItem="nM3-7W-N3I" secondAttribute="trailing" id="UVl-fq-mJu"/>
                                     <constraint firstItem="0lQ-n8-cwG" firstAttribute="height" secondItem="J4u-PM-V5B" secondAttribute="height" multiplier="0.4" id="V9h-ZN-v6D"/>
-                                    <constraint firstAttribute="bottom" secondItem="Dx2-rw-BUD" secondAttribute="bottom" constant="16" id="axd-w8-9Ud"/>
+                                    <constraint firstAttribute="bottom" secondItem="Dx2-rw-BUD" secondAttribute="bottom" constant="32" id="axd-w8-9Ud"/>
                                     <constraint firstAttribute="bottom" secondItem="nM3-7W-N3I" secondAttribute="bottom" id="b2W-yy-SLi"/>
                                     <constraint firstAttribute="trailing" secondItem="0lQ-n8-cwG" secondAttribute="trailing" id="jGD-tg-esQ"/>
                                     <constraint firstItem="0lQ-n8-cwG" firstAttribute="leading" secondItem="J4u-PM-V5B" secondAttribute="leading" id="l2c-DF-K20"/>
                                     <constraint firstItem="nM3-7W-N3I" firstAttribute="top" secondItem="0lQ-n8-cwG" secondAttribute="bottom" id="x7m-bD-9Rk"/>
                                     <constraint firstItem="nM3-7W-N3I" firstAttribute="leading" secondItem="J4u-PM-V5B" secondAttribute="leading" id="xob-rd-QAO"/>
-                                    <constraint firstAttribute="trailing" secondItem="Dx2-rw-BUD" secondAttribute="trailing" constant="16" id="z8h-JK-BLn"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -597,6 +628,11 @@
                             <constraint firstItem="J4u-PM-V5B" firstAttribute="leading" secondItem="1zR-L7-PyI" secondAttribute="leading" id="yaV-aB-H9v"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="linkTextField" destination="zDE-Z9-KIz" id="Sq2-dn-aLV"/>
+                        <outlet property="sendButton" destination="Dx2-rw-BUD" id="AGM-5a-1ub"/>
+                        <outlet property="studentsMapView" destination="nM3-7W-N3I" id="nDa-4g-t7O"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3SA-ii-iom" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -613,6 +649,6 @@
         <image name="ic_refresh" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Y85-I5-aZT"/>
+        <segue reference="Kg9-PO-bCO"/>
     </inferredMetricsTieBreakers>
 </document>

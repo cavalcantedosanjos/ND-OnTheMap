@@ -19,7 +19,7 @@ class StudentService: NSObject {
     }
     
     func autentication(username: String, password: String,
-                       onSuccess: @escaping (_ student: StudentInformation) -> Void,
+                       onSuccess: @escaping (_ key: String) -> Void,
                        onFailure: @escaping (_ error: ErrorResponse) -> Void,
                        onCompleted: @escaping ()-> Void) {
         
@@ -30,12 +30,37 @@ class StudentService: NSObject {
             ]
         ]
         
-        ServiceManager.sharedInstance().request(method: .POST, url: URLFactory.autentitionUrl(), parameters: parameters as AnyObject?, onSuccess: { (data) in
+        ServiceManager.sharedInstance().request(method: .POST, url: URLFactory.autentitionUrl(), parameters: parameters, onSuccess: { (data) in
+            
+            let newData = data.subdata(in: Range(uncheckedBounds: (5, data.count)))
+            let parsedResult = JSON.deserialize(data: newData) as! [String : AnyObject]
+            
+            if let account = parsedResult["account"], let key = account["key"] as? String{
+                onSuccess(key)
+            } else {
+                onFailure(ErrorResponse(code: "", error: "Key not found."))
+            }
+
+        }, onFailure: { (error) in
+            onFailure(error)
+        }, onCompleted: {
+            onCompleted()
+        })
+    }
+    
+    func getUserInformation(key: String,
+                            onSuccess: @escaping (_ student: User) -> Void,
+                            onFailure: @escaping (_ error: ErrorResponse) -> Void,
+                            onCompleted: @escaping ()-> Void) {
+        
+        let url = URLFactory.userInformationUrl(key: key)
+        
+        ServiceManager.sharedInstance().request(method: .GET, url: url, onSuccess: { (data) in
             
             let newData = data.subdata(in: Range(uncheckedBounds: (5, data.count)))
             let parsedResult = JSON.deserialize(data: newData)
             
-            let student = StudentInformation(dictionary: parsedResult as! [String : AnyObject])
+            let student = User(dictionary: parsedResult as! [String : AnyObject])
             onSuccess(student)
             
         }, onFailure: { (error) in
@@ -43,8 +68,6 @@ class StudentService: NSObject {
         }, onCompleted: {
             onCompleted()
         })
-        
-        
         
     }
     
@@ -77,58 +100,5 @@ class StudentService: NSObject {
         })
         
     }
-    
-    func getStudentsLocation(withLimit limit: Int = 100, withOrder order: String = "updatedAt", onSuccess: @escaping (_ locations: [StudentLocation]) -> Void,
-                             onFailure: @escaping (_ error: ErrorResponse) -> Void,
-                             onCompleted: @escaping ()-> Void) {
-        
-        
-        let url = URLFactory.getStudentsLocationUrl() + "?limit=\(limit)&order=-\(order)"
-        
-        ServiceManager.sharedInstance().request(method: .GET, url: url,  onSuccess: { (data) in
-            
-            let parsedResult = JSON.deserialize(data: data)
-            if let results = parsedResult["results"] as? [[String:AnyObject]] {
-                var locations: [StudentLocation] = [StudentLocation]()
-                
-                for result in results {
-                    locations.append(StudentLocation(dictionay: result))
-                }
-                onSuccess(locations)
-            }
-            
-        }, onFailure: { (error) in
-            onFailure(error)
-        }, onCompleted: {
-            onCompleted()
-        })
-    }
-    
-    func getCurrentLocation(onSuccess: @escaping (_ locations: [StudentLocation]) -> Void,
-                            onFailure: @escaping (_ error: ErrorResponse) -> Void,
-                            onCompleted: @escaping ()-> Void) {
-        
-        let url = URLFactory.getStudentsLocationUrl() + "?where={\"uniqueKey\":\"\(StudentInformation.currentUser.key!)\"}&order=-updatedAt"
-        
-        ServiceManager.sharedInstance().request(method: .POST, url: url, onSuccess: { (data) in
-            
-            let parsedResult = JSON.deserialize(data: data)
-            if let results = parsedResult["results"] as? [[String:AnyObject]] {
-                var locations: [StudentLocation] = [StudentLocation]()
-                
-                for result in results {
-                    locations.append(StudentLocation(dictionay: result))
-                }
-                
-                onSuccess(locations)
-            }
-            
-        }, onFailure: { (error) in
-            onFailure(error)
-        }, onCompleted: {
-            onCompleted()
-        })
-        
-    }
-    
+
 }

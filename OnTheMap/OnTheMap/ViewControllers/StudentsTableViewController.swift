@@ -38,10 +38,27 @@ class StudentsTableViewController: UITableViewController {
         getStudentsLocation()
     }
     
+    @IBAction func pinButton_Clicked(_ sender: Any) {
+        if User.current.location != nil{
+            let alert: UIAlertController = UIAlertController(title: "", message: "You Have Already Posted a Student Location. Would You Like to Overwrite. Your Current Location?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
+                self.performSegue(withIdentifier: "locationSegue", sender: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        performSegue(withIdentifier: "locationSegue", sender: nil)
+    }
     // MARK: - Services
     func getStudentsLocation() {
         
-        StudentService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
+        LocationService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
             (UIApplication.shared.delegate as! AppDelegate).locations = []
             if studentsLocation.count > 0 {

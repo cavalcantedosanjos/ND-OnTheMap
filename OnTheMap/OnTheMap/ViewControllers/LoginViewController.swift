@@ -18,7 +18,6 @@ class LoginViewController: UIViewController {
         
         return vc
     }
-
     
     // MARK: - Properties
     @IBOutlet weak var emailTextField: UITextField!
@@ -62,23 +61,40 @@ class LoginViewController: UIViewController {
             return
         }
         
-        
-       enableActivityIndicator(enable: true)
         self.view.endEditing(true)
-        StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (info) in
+        login(username: username, password: password)
+        
+    }
+    
+    @IBAction func singUpButton_clicked(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://www.udacity.com/account/auth#!/signup")!, options: [:], completionHandler: nil)
+    }
+    
+    // MARK: - Services
+    func login(username: String, password: String) {
+        enableActivityIndicator(enable: true)
+        
+        StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (key) in
             
-            StudentInformation.currentUser = info
+            self.getUserInformation(key: key)
+            
+        }, onFailure: { (error) in
+            self.enableActivityIndicator(enable: false)
+            self.showMessage(message: error.error!, title: "")
+        }, onCompleted: {
+            //Nothing
+        })
+    }
+    
+    func getUserInformation(key: String) {
+        StudentService.sharedInstance().getUserInformation(key: key, onSuccess: { (user) in
+            User.current = user
             self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
-            
         }, onFailure: { (error) in
             self.showMessage(message: error.error!, title: "")
         }, onCompleted: {
             self.enableActivityIndicator(enable: false)
         })
-    }
-    
-    @IBAction func singUpButton_clicked(_ sender: Any) {
-         UIApplication.shared.open(URL(string: "https://www.udacity.com/account/auth#!/signup")!, options: [:], completionHandler: nil)
     }
     
     // MARK: - Helpers

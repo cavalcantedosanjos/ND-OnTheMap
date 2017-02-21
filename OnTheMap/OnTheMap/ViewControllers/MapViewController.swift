@@ -48,7 +48,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func pinButton_Clicked(_ sender: Any) {
-        if StudentInformation.currentUser.location != nil{
+        if User.current.location != nil{
             let alert: UIAlertController = UIAlertController(title: "", message: "You Have Already Posted a Student Location. Would You Like to Overwrite. Your Current Location?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
@@ -68,7 +68,7 @@ class MapViewController: UIViewController {
     // MARK: - Services
     func getStudentsLocation() {
         
-        StudentService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
+        LocationService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
             (UIApplication.shared.delegate as! AppDelegate).locations = []
             if studentsLocation.count > 0 {
@@ -88,10 +88,10 @@ class MapViewController: UIViewController {
     }
     
     func getCurrentLocation() {
-        StudentService.sharedInstance().getCurrentLocation(onSuccess: { (locations) in
+        LocationService.sharedInstance().getCurrentLocation(onSuccess: { (locations) in
             
             if let location = locations.first{
-                StudentInformation.currentUser.location = location
+                User.current.location = location
             }
             
         }, onFailure: { (errorRespons) in
