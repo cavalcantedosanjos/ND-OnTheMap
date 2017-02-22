@@ -10,6 +10,10 @@ import UIKit
 import MapKit
 import CoreLocation
 
+protocol ShowLocationViewControllerDelegate {
+    func didFinishedPostLocation()
+}
+
 class ShowLocationViewController: UIViewController {
     
     // MARK: - Properties
@@ -18,6 +22,7 @@ class ShowLocationViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var placemark: CLPlacemark?
+    var delegate: ShowLocationViewControllerDelegate?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -50,21 +55,25 @@ class ShowLocationViewController: UIViewController {
         } else {
             showMessage(message: "Location Not Found.", title: "")
         }
-        
-        
     }
     
     // MARK: - Service
     func createLocation(mapString: String, mediaURL: String, latitude: Double, longitude: Double) {
         enableActivityIndicator(enable: true)
+        sendButton.isEnabled = false
         LocationService.sharedInstance().createLocation(mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude, onSuccess: {
             
-          
-       
+            
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: nil)
+                self.delegate?.didFinishedPostLocation()
+            }
+            
         }, onFailure: { (errorResponse) in
             self.showMessage(message: errorResponse.error!, title: "")
         }, onCompleted: {
             self.enableActivityIndicator(enable: false)
+            self.sendButton.isEnabled = true
         })
     }
     

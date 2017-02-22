@@ -50,7 +50,9 @@ class ServiceManager: NSObject {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
             } catch {
-                //TODO
+                let errorResponse = ErrorResponse(code: "", error: "Unexpected error")
+                onFailure(errorResponse)
+                onCompleted()
             }
         }
         

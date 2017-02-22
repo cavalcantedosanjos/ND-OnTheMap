@@ -42,12 +42,6 @@ class LoginViewController: UIViewController {
         unsubscribeFromKeyboardNotifications()
     }
     
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    
     // MARK: - Actions
     @IBAction func loginButton_clicked(_ sender: Any) {
         
@@ -76,20 +70,9 @@ class LoginViewController: UIViewController {
         
         StudentService.sharedInstance().autentication(username: username, password: password, onSuccess: { (key) in
             
-            self.getUserInformation(key: key)
+            User.current.key = key
+           self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
             
-        }, onFailure: { (error) in
-            self.enableActivityIndicator(enable: false)
-            self.showMessage(message: error.error!, title: "")
-        }, onCompleted: {
-            //Nothing
-        })
-    }
-    
-    func getUserInformation(key: String) {
-        StudentService.sharedInstance().getUserInformation(key: key, onSuccess: { (user) in
-            User.current = user
-            self.performSegue(withIdentifier: "tabBarSegue", sender: nil)
         }, onFailure: { (error) in
             self.showMessage(message: error.error!, title: "")
         }, onCompleted: {

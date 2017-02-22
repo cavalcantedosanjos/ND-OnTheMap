@@ -28,6 +28,18 @@ class MapViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        getUserInformation(key: User.current.key!)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == kLocationSegue) {
+            let vc = segue.destination as! SearchLocationViewController
+            vc.delegate = self
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func logoutButton_Clicked(_ sender: Any) {
         self.present(LoginViewController.newInstanceFromStoryboard(), animated: true, completion: nil)
@@ -36,7 +48,6 @@ class MapViewController: UIViewController {
     
     
     @IBAction func refreshButton_Clicked(_ sender: Any) {
-        studentsMapView.removeAnnotations(studentsMapView.annotations)
         getStudentsLocation()
     }
     
@@ -54,13 +65,13 @@ class MapViewController: UIViewController {
             (UIApplication.shared.delegate as! AppDelegate).locations = []
             if studentsLocation.count > 0 {
                 (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
-                
                 DispatchQueue.main.async {
                     self.addAnnotations(locations: studentsLocation)
                 }
-                
+            } else {
+               self.removeAllAnnotations()
             }
-
+            
         }, onFailure: { (error) in
              self.showMessage(message: error.error!, title: "")
         }, onCompleted: {
@@ -93,8 +104,19 @@ class MapViewController: UIViewController {
         })
     }
     
+    func getUserInformation(key: String) {
+        StudentService.sharedInstance().getUserInformation(key: key, onSuccess: { (user) in
+            User.current = user
+        }, onFailure: { (error) in
+            self.showMessage(message: error.error!, title: "")
+        }, onCompleted: {
+            //Nothing
+        })
+    }
+    
     // MARK: - Helpers
     func addAnnotations(locations: [StudentLocation]) {
+        removeAllAnnotations()
         var annotations: [MKAnnotation] = [MKAnnotation]()
         
         for location in locations {
@@ -110,6 +132,10 @@ class MapViewController: UIViewController {
         }
         
         self.studentsMapView.showAnnotations(annotations, animated: true)
+    }
+    
+    func removeAllAnnotations() {
+        studentsMapView.removeAnnotations(studentsMapView.annotations)
     }
     
     func showMessage(message: String, title: String) {
@@ -136,9 +162,9 @@ class MapViewController: UIViewController {
             }))
             
             self.present(alert, animated: true, completion: nil)
+        } else {
+            performSegue(withIdentifier: "locationSegue", sender: nil)
         }
-        
-        performSegue(withIdentifier: "locationSegue", sender: nil)
     }
 }
 
@@ -173,5 +199,12 @@ extension MapViewController: MKMapViewDelegate {
                 }
             }
         }
+    }
+}
+
+// MARK: - SearchLocationViewControllerDelegate
+extension MapViewController: SearchLocationViewControllerDelegate {
+    func didFinishedPostLocation() {
+        self.getStudentsLocation()
     }
 }
