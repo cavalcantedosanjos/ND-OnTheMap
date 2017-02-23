@@ -11,13 +11,11 @@ import UIKit
 class StudentsTableViewController: UITableViewController {
     
     // MARK: - Properties
-    var locations: [StudentLocation] = [StudentLocation]()
     let kLocationSegue = "locationSegue"
     
     // MARK: - Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        locations = (UIApplication.shared.delegate as! AppDelegate).locations
         tableView.reloadData()
     }
     
@@ -30,7 +28,7 @@ class StudentsTableViewController: UITableViewController {
     
     // MARK: - Actions
     @IBAction func logoutButton_Clicked(_ sender: Any) {
-        self.present(LoginViewController.newInstanceFromStoryboard(), animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         logout()
     }
     
@@ -48,12 +46,9 @@ class StudentsTableViewController: UITableViewController {
         
         LocationService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
-            (UIApplication.shared.delegate as! AppDelegate).locations = []
+            StudentDataSource.sharedInstance.studentData.removeAll()
             if studentsLocation.count > 0 {
-                (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
-                self.locations = studentsLocation
-            } else {
-                self.locations = []
+                StudentDataSource.sharedInstance.studentData = studentsLocation
             }
             
         }, onFailure: { (error) in
@@ -91,18 +86,19 @@ class StudentsTableViewController: UITableViewController {
     
     // MARK: - UITableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        return StudentDataSource.sharedInstance.studentData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentCell") as! StudentsTableViewCell
-        cell.setup(location: locations[indexPath.row])
+        cell.setup(location: StudentDataSource.sharedInstance.studentData[indexPath.row])
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        if let url = URL(string: locations[indexPath.row].mediaUrl!) {
+        if let url = URL(string: StudentDataSource.sharedInstance.studentData[indexPath.row].mediaUrl!) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
             showMessage(message: "Can't Open URL", title: "")
