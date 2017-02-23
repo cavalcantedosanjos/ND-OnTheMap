@@ -23,8 +23,8 @@ class MapViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (UIApplication.shared.delegate as! AppDelegate).locations.count > 0{
-            addAnnotations(locations: (UIApplication.shared.delegate as! AppDelegate).locations)
+        if(StudentDataSource.sharedInstance.studentData.count > 0) {
+            addAnnotations(locations: StudentDataSource.sharedInstance.studentData)
         }
     }
     
@@ -42,7 +42,7 @@ class MapViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func logoutButton_Clicked(_ sender: Any) {
-        self.present(LoginViewController.newInstanceFromStoryboard(), animated: true, completion: nil)
+       self.dismiss(animated: true, completion: nil)
         logout()
     }
     
@@ -62,9 +62,9 @@ class MapViewController: UIViewController {
         
         LocationService.sharedInstance().getStudentsLocation(onSuccess: { (studentsLocation) in
             
-            (UIApplication.shared.delegate as! AppDelegate).locations = []
+           StudentDataSource.sharedInstance.studentData.removeAll()
             if studentsLocation.count > 0 {
-                (UIApplication.shared.delegate as! AppDelegate).locations = studentsLocation
+               StudentDataSource.sharedInstance.studentData = studentsLocation
                 DispatchQueue.main.async {
                     self.addAnnotations(locations: studentsLocation)
                 }

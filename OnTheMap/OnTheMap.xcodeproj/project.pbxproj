@@ -25,6 +25,7 @@
 		CF3DB6F11E45158A008DF397 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3DB6E91E45158A008DF397 /* Main.storyboard */; };
 		CF44EEC41E546DF400A0D8A4 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF44EEC31E546DF400A0D8A4 /* JSON.swift */; };
 		CF4E30E31E4BD22A00092710 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4E30E21E4BD22A00092710 /* ServiceManager.swift */; };
+		CF647F6A1E5F0D360043A329 /* StudentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF647F691E5F0D360043A329 /* StudentDataSource.swift */; };
 		CFE8BD871E525495009479D4 /* StudentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD861E525495009479D4 /* StudentService.swift */; };
 		CFE8BD8F1E5266EB009479D4 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD8D1E5266EB009479D4 /* Environment.swift */; };
 		CFE8BD901E5266EB009479D4 /* URLFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8BD8E1E5266EB009479D4 /* URLFactory.swift */; };
@@ -50,6 +51,7 @@
 		CF3DB6EA1E45158A008DF397 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF44EEC31E546DF400A0D8A4 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		CF4E30E21E4BD22A00092710 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		CF647F691E5F0D360043A329 /* StudentDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentDataSource.swift; sourceTree = "<group>"; };
 		CFE8BD861E525495009479D4 /* StudentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentService.swift; sourceTree = "<group>"; };
 		CFE8BD8D1E5266EB009479D4 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		CFE8BD8E1E5266EB009479D4 /* URLFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLFactory.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				CF00A9281E49300D004263C1 /* User.swift */,
 				CF00A92A1E494D7F004263C1 /* StudentLocation.swift */,
 				CF02BC8C1E562E9C00EF24BE /* ErrorResponse.swift */,
+				CF647F691E5F0D360043A329 /* StudentDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				CF00A9291E49300D004263C1 /* User.swift in Sources */,
 				CF00A91D1E492359004263C1 /* LoginViewController.swift in Sources */,
 				CFE8BD901E5266EB009479D4 /* URLFactory.swift in Sources */,
+				CF647F6A1E5F0D360043A329 /* StudentDataSource.swift in Sources */,
 				CF3DB6ED1E45158A008DF397 /* AppDelegate.swift in Sources */,
 				CF00A9201E4923E4004263C1 /* CustomButton.swift in Sources */,
 				CF0DB88C1E538B980040759C /* ShowLocationViewController.swift in Sources */,
