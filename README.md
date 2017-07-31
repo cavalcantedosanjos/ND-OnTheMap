@@ -1,2 +1,2 @@
-# ND-OnTheMap
-ND-OnTheMap
+# On the Map
+## iOS Developer Nanodegree - On the Map
